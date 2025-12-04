@@ -5,9 +5,15 @@ const connectDB = require('./config/db'); //database connection
 
 dotenv.config(); //load environment variables
 
+const passport = require('passport'); //import newly
+
 connectDB(); //connect to database
 
+require('./config/passport-setup'); //run passport-setup.js
+
 const app = express();
+
+app.use(passport.initialize()); //// passport initialize
 
 app.use(cors());
 
@@ -24,8 +30,10 @@ app.get('/', (req,res)=>{
 //connecting auth routes
 app.use('/api/auth', require('./routes/auth.routes'));
 
+//connecting travel records routes
+app.use('/api/records', require('./routes/records.routes'));
+
 //start the server
 app.listen(PORT, ()=>{
     console.log(`My Smart Travel Server is running on port: ${PORT}`);
 });
-
