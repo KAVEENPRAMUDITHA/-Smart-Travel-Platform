@@ -1,9 +1,12 @@
 const express = require('express'); // Express framework
 const dotenv = require('dotenv'); //to manage environment variables
 const cors = require('cors');
-const connectDB = require('./config/db'); //database connection
+const path = require('path');
 
-dotenv.config(); //load environment variables
+dotenv.config({ path: path.join(__dirname, '..', '.env') }); //load environment variables from root
+
+const connectDB = require('./config/db'); //database connection
+const passport = require('passport'); //import newly
 
 const passport = require('passport'); //import newly
 
@@ -23,7 +26,7 @@ app.use(express.json());
 const PORT = 5000; //port number
 
 //define routes
-app.get('/', (req,res)=>{
+app.get('/', (req, res) => {
     res.send('Hello! My Smart Travel Server is running!');
 });
 
@@ -34,6 +37,6 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/records', require('./routes/records.routes'));
 
 //start the server
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`My Smart Travel Server is running on port: ${PORT}`);
 });
